@@ -1,0 +1,12 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node-dev --project ./tsconfig.json ./application/app.ts"
+  },
+  "dependencies": {
+    "tkrjs": "^1.0.15"
+  }
+}
