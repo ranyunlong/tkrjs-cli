@@ -3,14 +3,19 @@
   "bin": {
     "tkr": "./index.js"
   },
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "for tkrjs cli",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": ["tkrjs","tkrjs-cli","typescript","koa"],
-  "author": "",
+  "author": {
+    "email": "549510622@qq.com",
+    "name": "ranyunlong",
+    "url": "ranyunlong.com"
+  },
+  "repository": "ranyunlong/tkrjs-cli",
   "license": "ISC",
   "dependencies": {
     "chalk": "^2.4.1",
