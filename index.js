@@ -52,7 +52,6 @@ program
                     npmi.on('close',function(){
                         console.log('\nTo get started:\n')
                         console.log(chalk.yellow(`cd ${value}`))
-                        console.log(chalk.yellow(`npm i`))
                         console.log(chalk.yellow(`npm i -g node-dev ts-node-dev typescript`))
                         console.log(chalk.yellow(`${type} start\n`))     
                     })
