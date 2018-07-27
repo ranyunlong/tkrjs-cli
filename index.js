@@ -39,24 +39,26 @@ program
                 choices:['use yarn install','use npm install'],
                 default:0,
                 name:'select'
-            }).then(res=>{
+            }).then((res)=>{
                 // console.log(res)
+                function install(type){
+                    //const spinner = ora('Loading install package').start()
+                    const npmi = spawn(type,['install'],{
+                        cwd:path.resolve(value),
+                        stdio:'inherit',
+                        env:process.env
+                    })
+
+                    npmi.on('close',function(){
+                        console.log('\nTo get started:\n')
+                        console.log(chalk.yellow(`cd ${value}`))
+                        console.log(chalk.yellow(`${type} start\n`))
+                    })
+                }
                 if(res.select == 'use yarn install'){
-                    const spinner = ora('Loading install package').start()
-                    const npmi = spawn('yarn',['install'],{
-                        cwd:path.resolve(value)
-                    })
-                    npmi.stdout.on('close',data=>{
-                        spinner.succeed('Package installed')
-                    })
+                    install(`yarn`)
                 }else{
-                    const spinner = ora('Loading install package').start()
-                    const npmi = spawn('npm',['i'],{
-                        cwd:path.resolve(value)
-                    })
-                    npmi.stdout.on('close',data=>{
-                        spinner.succeed('Package installed')
-                    })
+                    install(`npm`)
                 }
             })
         }
