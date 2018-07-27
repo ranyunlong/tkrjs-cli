@@ -3,7 +3,7 @@
   "bin": {
     "tkr": "./index.js"
   },
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "for tkrjs cli",
   "main": "index.js",
   "scripts": {
