@@ -52,7 +52,9 @@ program
                     npmi.on('close',function(){
                         console.log('\nTo get started:\n')
                         console.log(chalk.yellow(`cd ${value}`))
-                        console.log(chalk.yellow(`${type} start\n`))
+                        console.log(chalk.yellow(`npm i`))
+                        console.log(chalk.yellow(`npm i -g node-dev ts-node-dev typescript`))
+                        console.log(chalk.yellow(`${type} start\n`))     
                     })
                 }
                 if(res.select == 'use yarn install'){
@@ -70,7 +72,15 @@ program
                 message:"Do you need to install dependencies?",
                 default:true
             }).then(res=>{
-                if(res.install) confirmInstallType()
+                if(res.install) {
+                    confirmInstallType()
+                    return;
+                }
+                console.log('\nTo get started:\n')
+                console.log(chalk.yellow(`cd ${value}`))
+                console.log(chalk.yellow(`npm i`))
+                console.log(chalk.yellow(`npm i -g node-dev ts-node-dev typescript`))
+                console.log(chalk.yellow(`${type} start\n`))     
             })
         }
     })

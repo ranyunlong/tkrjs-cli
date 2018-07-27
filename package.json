@@ -13,10 +13,10 @@
   "author": {
     "email": "549510622@qq.com",
     "name": "ranyunlong",
-    "url": "ranyunlong.com"
+    "url": "http://ranyunlong.com"
   },
   "repository": "ranyunlong/tkrjs-cli",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.1",
     "commander": "^2.16.0",
