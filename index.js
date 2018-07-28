@@ -43,7 +43,7 @@ program
                 // console.log(res)
                 function install(type){
                     //const spinner = ora('Loading install package').start()
-                    const npmi = spawn(type,['install'],{
+                    const npmi = spawn(process.platform == 'win32' ? type + '.cmd' : type,['install'],{
                         cwd:path.resolve(value),
                         stdio:'inherit',
                         env:process.env
