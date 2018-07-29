@@ -25,3 +25,13 @@ tkr -c <controller name>
 ```
 tkr -s <service name>
 ```
+
+### start 
+
+```
+tkr start <tsconfig-path> <entry-file-path>
+```
+
+```
+tkr serve <tsconfig-path> <entry-file-path>
+```

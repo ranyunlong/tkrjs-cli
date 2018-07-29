@@ -1,5 +1,5 @@
 function controllerTpl(name){
-return `import { Controller } from "tkrjs";
+return `import { Controller, Get } from "tkrjs";
 
 @Controller('/')
 export class ${name}Controller{

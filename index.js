@@ -96,8 +96,11 @@ program
         const filePath = path.resolve('application','controllers',name+'.ts')
         const scanner = ora(`Create Controller file ${filePath}`).start()
 
-        const ErrorDirectoryNotExist = new Error(`${chalk.red(`Directory does not exist`)} \n ${chalk.yellow('   at ' + path.resolve('application','controllers'))}`)
-        const ErrorFileCreated= new Error(chalk.red(`The current file has been created`) + chalk.yellow('   at ' + filePath))
+        //const ErrorDirectoryNotExist = new Error(`${chalk.red(`Directory does not exist`)} \n ${chalk.yellow('   at ' + path.resolve('application','controllers'))}`)
+        // const ErrorFileCreated= new Error(`${chalk.red(`The current file has been created`)} \n ${chalk.yellow('   at ' + filePath)}`)
+        //console.log(`${chalk.red(`The current file has been created`)} \n ${chalk.yellow('   at ' + filePath)}`)
+        const ErrorDirectoryNotExist = new Error(`Directory does not exist \n    at  ${path.resolve('application','controllers')}`)
+        const ErrorFileCreated= new Error(`The current file has been created \n    at ${filePath}`)
 
         if(!fs.existsSync(path.resolve('application','controllers'))) {
             scanner.fail(`Creation failed`)
@@ -113,17 +116,19 @@ program
     })
     .option('-s, --service <ServiceName>','generate a new service.ts file from a template',function(name){
         if(!/^[A-Z]/.test(name)){
-            throw new Error(chalk.red(`The Service name "${name}" first letter must be capitalized`))
+            const TKR_ERROR = new Error(`The Service name "${name}" first letter must be capitalized`)
+            throw TKR_ERROR
         }
         if(/[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/g.test(name) || /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/g.test(name)){
-            throw new Error(chalk.red(`The Service name "${name}" cannot contain special symbols`))
+            const TKR_ERROR = new Error(`The Service name "${name}" cannot contain special symbols`)
+            throw TKR_ERROR
         }
         
         const filePath = path.resolve('application','services',name+'.ts')
         const scanner = ora(`Create Controller file ${filePath}`).start()
 
-        const ErrorDirectoryNotExist = new Error(`${chalk.red(`Directory does not exist`)} \n ${chalk.yellow('   at ' + path.resolve('application','controllers'))}`)
-        const ErrorFileCreated= new Error(chalk.red(`The current file has been created`) + chalk.yellow('   at ' + filePath))
+        const ErrorDirectoryNotExist = new Error(`Directory does not exist \n    at ${path.resolve('application','controllers')}`)
+        const ErrorFileCreated= new Error(`The current file has been created \n    at ${filePath}`)
 
         if(!fs.existsSync(path.resolve('application','services'))) {
             scanner.fail(`Creation failed`)
@@ -135,7 +140,7 @@ program
         }
         
         fs.writeFileSync(filePath,tpl.serviceTpl(name))
-        scanner.succeed(`${filePath}`)
+        scanner.succeed(`File created! ${filePath}`)
     })
 
 program
@@ -167,7 +172,7 @@ program
 
 program.parse(process.argv)
 
-if(program.args.length == 0){
+if(process.argv.length <= 2){
     program.outputHelp(cb=>{
         return chalk.green(cb)
     })
