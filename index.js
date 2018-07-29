@@ -42,18 +42,26 @@ program
             }).then((res)=>{
                 // console.log(res)
                 function install(type){
-                    //const spinner = ora('Loading install package').start()
-                    const npmi = spawn(process.platform == 'win32' ? type + '.cmd' : type,['install'],{
-                        cwd:path.resolve(value),
+                    if(process.platform == 'win32') type += '.cmd'
+                
+                    const ts = spawn(process.platform == 'win32'?'npm.cmd':'npm',['install','-g','typescript','ts-node-dev'],{
                         stdio:'inherit',
                         env:process.env
                     })
 
-                    npmi.on('close',function(){
-                        console.log('\nTo get started:\n')
-                        console.log(chalk.yellow(`cd ${value}`))
-                        console.log(chalk.yellow(`npm i -g node-dev ts-node-dev typescript`))
-                        console.log(chalk.yellow(`${type} start\n`))     
+                    ts.on('close',function(){
+                        const npmi = spawn(type,['install'],{
+                            cwd:path.resolve(value),
+                            stdio:'inherit',
+                            env:process.env
+                        })
+    
+                        npmi.on('close',function(){
+                            console.log('\nTo get started:\n')
+                            console.log(chalk.yellow(`cd ${value}`))
+                            console.log(chalk.yellow(`${type.replace('.cmd','')} start`))     
+                            console.log(chalk.yellow(`docs in ${chalk.green(`https://github.com/ranyunlong/tkrjs`)}`))
+                        })
                     })
                 }
                 if(res.select == 'use yarn install'){
@@ -77,9 +85,10 @@ program
                 }
                 console.log('\nTo get started:\n')
                 console.log(chalk.yellow(`cd ${value}`))
-                console.log(chalk.yellow(`npm i`))
-                console.log(chalk.yellow(`npm i -g node-dev ts-node-dev typescript`))
-                console.log(chalk.yellow(`${type} start\n`))     
+                console.log(chalk.yellow(`npm install`))
+                console.log(chalk.yellow(`npm install -g ts-node-dev typescript`))
+                console.log(chalk.yellow(`${type} start\n`))   
+                console.log(`docs in https://github.com/ranyunlong/tkrjs`)  
             })
         }
     })
