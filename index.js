@@ -4,7 +4,7 @@ const program = require('commander')
 const path = require('path')
 const VERSION = require('./package').version
 const chalk = require('chalk')
-const { spawn } = require('child_process')
+const { spawn,fork } = require('child_process')
 const fs = require('fs')
 const tpl = require('./tpl')
 const ora = require('ora')
@@ -43,25 +43,17 @@ program
                 // console.log(res)
                 function install(type){
                     if(process.platform == 'win32') type += '.cmd'
-                
-                    const ts = spawn(process.platform == 'win32'?'npm.cmd':'npm',['install','-g','typescript','ts-node-dev'],{
+                    const npmi = spawn(type,['install'],{
+                        cwd:path.resolve(value),
                         stdio:'inherit',
                         env:process.env
                     })
 
-                    ts.on('close',function(){
-                        const npmi = spawn(type,['install'],{
-                            cwd:path.resolve(value),
-                            stdio:'inherit',
-                            env:process.env
-                        })
-    
-                        npmi.on('close',function(){
-                            console.log('\nTo get started:\n')
-                            console.log(chalk.yellow(`cd ${value}`))
-                            console.log(chalk.yellow(`${type.replace('.cmd','')} start`))     
-                            console.log(chalk.yellow(`docs in ${chalk.green(`https://github.com/ranyunlong/tkrjs`)}`))
-                        })
+                    npmi.on('close',function(){
+                        console.log('\nTo get started:\n')
+                        console.log(chalk.yellow(`cd ${value}`))
+                        console.log(chalk.yellow(`${type.replace('.cmd','')} start`))     
+                        console.log(chalk.yellow(`docs in ${chalk.green(`https://github.com/ranyunlong/tkrjs`)}`))
                     })
                 }
                 if(res.select == 'use yarn install'){
@@ -86,8 +78,7 @@ program
                 console.log('\nTo get started:\n')
                 console.log(chalk.yellow(`cd ${value}`))
                 console.log(chalk.yellow(`npm install`))
-                console.log(chalk.yellow(`npm install -g ts-node-dev typescript`))
-                console.log(chalk.yellow(`${type} start\n`))   
+                console.log(chalk.yellow(`npm start\n`))   
                 console.log(`docs in https://github.com/ranyunlong/tkrjs`)  
             })
         }
@@ -145,6 +136,32 @@ program
         
         fs.writeFileSync(filePath,tpl.serviceTpl(name))
         scanner.succeed(`${filePath}`)
+    })
+
+program
+    .command('serve <tsconfig-path> <entry-file-path>')
+    .action(function(confitPath,entryFilePath){
+        fork(path.join(__dirname,'node_modules','ts-node-dev','bin','ts-node-dev'),['--project',confitPath,entryFilePath],{
+            cwd:path.resolve()
+        },(error) => {
+            if (error) {
+              console.log(error)
+              process.exit()
+            }
+        })
+    })
+
+program
+    .command('start <tsconfig-path> <entry-file-path>')
+    .action(function(confitPath,entryFilePath){
+        fork(path.join(__dirname,'node_modules','ts-node','dist','bin'),['--project',confitPath,entryFilePath],{
+            cwd:path.resolve()
+        },(error) => {
+            if (error) {
+              console.log(error)
+              process.exit()
+            }
+        })
     })
 
 

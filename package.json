@@ -3,7 +3,7 @@
   "bin": {
     "tkr": "./index.js"
   },
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "for tkrjs cli",
   "main": "index.js",
   "scripts": {
@@ -27,6 +27,7 @@
     "commander": "^2.16.0",
     "download-git-repo": "^1.0.2",
     "inquirer": "^6.0.0",
-    "ora": "^3.0.0"
+    "ora": "^3.0.0",
+    "ts-node-dev": "^1.0.0-pre.26"
   }
 }
